@@ -1,8 +1,8 @@
 #Jetbrains
 .idea/
 
-#CMake
-cmake-build-debug
+Project
+exec
 
 ### C++ template
 # Prerequisites

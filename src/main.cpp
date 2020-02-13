@@ -40,12 +40,12 @@ int main(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), darea);
 
     XMLDocument svg_data;
-    svg_data.LoadFile("toto.svg");
+    svg_data.LoadFile("atom.svg");
     // XMLElement *rectangle1 = svg_data.FirstChildElement("svg")->FirstChildElement("g")->FirstChildElement("rect");
     // rectangle1->SetAttribute("style", "fill:#000000");
     XMLPrinter printer;
     svg_data.Print(&printer);
-    svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize(), NULL);
+    svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
     //  rsvg_handle_get_geometry_for_element  (svg_handle, NULL, &viewport, NULL, NULL);
 
 

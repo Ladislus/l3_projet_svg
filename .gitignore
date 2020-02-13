@@ -38,3 +38,6 @@ exec
 *.out
 *.app
 
+#CMake
+cmake-build-debug/
+CMakeLists.txt

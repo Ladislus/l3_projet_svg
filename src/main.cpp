@@ -12,13 +12,13 @@ static void do_drawing_svg(cairo_t *);
 bool swap = true;
 RsvgHandle *svg_handle;
 XMLDocument svg_data;
+GtkWidget *window;
 
 // RsvgRectangle viewport;
 
 static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
                               gpointer user_data)
 {
-    g_print("Done\n");
     do_drawing_svg(cr);
 
     return FALSE;
@@ -43,17 +43,18 @@ static void do_drawing(cairo_t * cr){
         }
 
     }
+    svg_data.SaveFile("../Resources/Image Samples/atom.svg");
     XMLPrinter printer;
     svg_data.Print(&printer);
     svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
     do_drawing_svg(cr);
-    g_print("CLICKED\n");
+    gtk_widget_queue_draw(window);
 }
 
 int main(int argc, char *argv[])
 {
     /*Initialization of widgets*/
-    GtkWidget *window;
+
     GtkWidget *darea;
 
     /*Init*/

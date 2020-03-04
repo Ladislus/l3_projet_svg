@@ -6,9 +6,9 @@
         <circle stroke="#4b541f" r="44" style="fill:#000000"/>
     </g>
     <g fill="#66899a" stroke="white">
-        <circle fill="#80a3cf" r="13"/>
-        <circle cy="-44" r="9"/>
-        <circle cx="-40" cy="18" r="9"/>
-        <circle cx="40" cy="18" r="9"/>
+        <circle fill="#80a3cf" r="13" style="fill:#FFFFFF"/>
+        <circle cy="-44" r="9" style="fill:#000000"/>
+        <circle cx="-40" cy="18" r="9" style="fill:#FFFFFF"/>
+        <circle cx="40" cy="18" r="9" style="fill:#000000"/>
     </g>
 </svg>

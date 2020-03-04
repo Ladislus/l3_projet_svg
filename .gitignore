@@ -2,9 +2,10 @@
 .idea/
 
 Project
-Snippets
-cmake-build-debug
-exec
+Snippets/
+cmake-build-debug/
+bin/
+obj/
 
 ### C++ template
 # Prerequisites

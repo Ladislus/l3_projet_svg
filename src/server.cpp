@@ -68,13 +68,13 @@ void Server::start() {
             }
             else {
                 std::cout << "Received datagram : " << this->_buffer << std::endl;
+                msg_size = sendto(this->_sock,"ACK\n", 4, 0,(struct sockaddr *)&this->_from, this->_fromlen);
+                if (msg_size  < 0) {
+                    this->_status = ACK;
+                    error();
+                }
+            }
 
-            }
-            msg_size = sendto(this->_sock,"ACK\n", 4, 0,(struct sockaddr *)&this->_from, this->_fromlen);
-            if (msg_size  < 0) {
-                this->_status = ACK;
-                error();
-            }
 
             this->_status = OK;
         }

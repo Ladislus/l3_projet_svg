@@ -41,3 +41,7 @@ exec
 #CMake
 cmake-build-debug/
 CMakeLists.txt
+
+Resources/Image Samples/atom.svg
+
+

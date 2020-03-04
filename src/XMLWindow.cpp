@@ -1,33 +1,25 @@
+//
+// Created by o2173194 on 04/03/20.
+//
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <librsvg/rsvg.h>
-#include <gio/gfile.h>
 #include <tinyxml2.h>
 
 using namespace tinyxml2;
 
-static void do_drawing(cairo_t *);
-static void do_drawing_svg(cairo_t *);
-
 bool swap = true;
+
+static void do_drawing(cairo_t *);
+
 RsvgHandle *svg_handle;
 XMLDocument svg_data;
 GtkWidget *window;
 
-// RsvgRectangle viewport;
-
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr,
-                              gpointer user_data)
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
 {
-    do_drawing_svg(cr);
-
-    return FALSE;
-}
-
-static void do_drawing_svg(cairo_t * cr)
-{
-    //  rsvg_handle_render_document (svg_handle, cr, &viewport, NULL);
     rsvg_handle_render_cairo(svg_handle, cr);
+    return FALSE;
 }
 
 static void do_drawing(cairo_t * cr){
@@ -50,10 +42,24 @@ static void do_drawing(cairo_t * cr){
     XMLPrinter printer;
     svg_data.Print(&printer);
     svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
-    do_drawing_svg(cr);
+    rsvg_handle_render_cairo(svg_handle, cr);
     gtk_widget_queue_draw(window);
 }
 
+/*
+ * Useful to load the current state of the atom.svg for initialisation and more
+ * */
+void loadSavedXMLtoRSVG()
+{
+    XMLPrinter printer;
+    svg_data.LoadFile("../Resources/Image Samples/atom.svg");
+    svg_data.Print(&printer);
+    svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
+}
+
+/*
+ * Initialize GTK Window and all widgets
+ * */
 int main(int argc, char *argv[])
 {
     /*Initialization of widgets*/
@@ -68,32 +74,19 @@ int main(int argc, char *argv[])
     /*Creation of a new drawing area*/
     darea = gtk_drawing_area_new();
 
-    /*
-     * Loading SVG data to the GTK Window
-     * */
-    svg_data.LoadFile("../Resources/Image Samples/atom.svg");
+    /* XML File to SVG */
+    loadSavedXMLtoRSVG();
 
-    /*Get the first circle of the SVG data*/
-    XMLElement *circle1 = svg_data.FirstChildElement("svg")->FirstChildElement("g")->FirstChildElement("circle");
-
-    /*Chnage the style of the circle1 value to black*/
-    circle1->SetAttribute("style", "fill:#000000");
-
-    /* This function will WRITE all the modifications of the SVG in the XMLFile*/
-    svg_data.SaveFile("../Resources/Image Samples/atom.svg");
-
-    XMLPrinter printer;
-    svg_data.Print(&printer);
-    svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
-    //rsvg_handle_get_geometry_for_element  (svg_handle, NULL, &viewport, NULL, NULL);
+//    /* This function will WRITE all the modifications of the SVG in the XMLFile*/
+//    svg_data.SaveFile("../Resources/Image Samples/atom.svg");
 
     /*
      * Connecting all the events to the GTK window
      * */
     g_signal_connect(G_OBJECT(darea), "draw",
-            G_CALLBACK(on_draw_event), NULL);
+                     G_CALLBACK(on_draw_event), NULL);
     g_signal_connect(window, "destroy",
-            G_CALLBACK(gtk_main_quit), NULL);
+                     G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(window, "button-press-event", G_CALLBACK(do_drawing), NULL);
 
 
@@ -117,3 +110,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+

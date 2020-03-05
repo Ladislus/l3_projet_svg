@@ -12,7 +12,7 @@ COMPILEUR_SERVER := $(CC) $(SFLAGS) $(IFLAGS)
 COMPILEUR_CLIENT := $(CC) $(SFLAGS) -I include
 
 #Noms des fichiers
-FILES_SERVER = main server
+FILES_SERVER = main server serverUI XMLController
 SRC_SERVER = $(addprefix src/, $(FILES_SERVER:=.cpp))
 OBJ_SERVER = $(addprefix obj/, $(FILES_SERVER:=.o))
 NAME_SERVER = server

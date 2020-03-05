@@ -28,7 +28,7 @@ link_directories(${GTK3_LIBRARY_DIRS}
                  ${CAIRO_LIBRARY_DIRS}
                  ${TXML_LIBRARY_DIRS})
 
-add_executable(server src/main.cpp src/server.cpp)
+add_executable(server src/main.cpp src/server.cpp src/serverUI.cpp src/XMLController.cpp)
 add_executable(client src/client.cpp)
 
 #On lies les librairies pour le serveur

@@ -43,8 +43,8 @@ obj/%.o : src/%.cpp
 	$(COMPILEUR_SERVER) -o $@ -c $<
 
 run :
-	valgrind --leak-check=full $(EXEC_CLIENT) 127.0.0.1 6000
-	valgrind --leak-check=full $(EXEC_SERVER) 6000
+	valgrind --leak-check=full --track-origins=yes $(EXEC_CLIENT) 127.0.0.1 6000
+	valgrind --leak-check=full --track-origins=yes $(EXEC_SERVER) 6000
 
 prepare :
 	test -d obj || mkdir obj

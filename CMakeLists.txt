@@ -33,3 +33,4 @@ add_executable(client src/client.cpp)
 
 #On lies les librairies pour le serveur
 target_link_libraries(server ${GTK3_LIBRARIES} ${RSVG_LIBRARIES} ${CAIRO_LIBRARIES} ${TXML_LIBRARIES})
+target_link_libraries(client -lcbor)

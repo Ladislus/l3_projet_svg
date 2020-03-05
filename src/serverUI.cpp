@@ -2,9 +2,7 @@
 // Created by o2173194 on 05/03/20.
 //
 
-#include <ServerUI.hpp>
-
-#include "ServerUI.hpp"
+#include "serverUI.hpp"
 
 RsvgHandle *rsvg_handle;
 

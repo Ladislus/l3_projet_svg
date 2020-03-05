@@ -8,14 +8,12 @@
 #define SIZE 1024
 
 #include <sys/types.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <string.h>
 #include <netdb.h>
-#include <stdio.h>
 #include <iostream>
+#include <strings.h>
 
 enum server_status { OK, FAILED, PORT, BINDING, RECV, ACK };
 
@@ -37,4 +35,4 @@ class Server {
         void start();
 };
 
-#endif //PROJET_SOCKET_HPP
+#endif //DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP

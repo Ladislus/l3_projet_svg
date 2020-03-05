@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
     if (socket_fd < 0) std::cerr << "ERROR : Socket creation failed !" << std::endl;
 
-    struct addrinfo hints;
+    struct addrinfo hints{};
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_DGRAM;
@@ -47,7 +47,9 @@ int main(int argc, char *argv[]) {
     size_t length = cbor_serialize_alloc(chroot, &buffer, &buffer_size);
 
     sendto(socket_fd, buffer, length, 0, server->ai_addr, server->ai_addrlen);
+
     free(buffer);
+    cbor_decref(&chroot); //Free for CBor items
 
     return 0;
 }

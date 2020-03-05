@@ -29,7 +29,7 @@ link_directories(${GTK3_LIBRARY_DIRS}
                  ${TXML_LIBRARY_DIRS})
 
 add_executable(server src/main.cpp src/server.cpp)
-#add_executable(client src/client.cpp)
+add_executable(client src/client.cpp)
 
 #On lies les librairies pour le serveur
 target_link_libraries(server ${GTK3_LIBRARIES} ${RSVG_LIBRARIES} ${CAIRO_LIBRARIES} ${TXML_LIBRARIES})

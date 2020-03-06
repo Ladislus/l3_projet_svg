@@ -2,11 +2,7 @@
 // Created by ladislus on 05/03/2020.
 //
 
-#include <iostream>
-#include <cbor.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <cstring>
+#include "client.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -57,9 +53,32 @@ int main(int argc, char *argv[]) {
 
     sendto(socket_fd, buffer, length, 0, server->ai_addr, server->ai_addrlen);
 
+    std::string x_input(""), y_input("");
+    int x_value = -1, y_value = -1;
+    bool x_ok = false, y_ok = false;
+
+    while (!x_ok || !y_ok) {
+        x_ok = false; y_ok = false;
+
+        std::cout << "Enter 'x y' (x>=0, y>=0) : ";
+        std::cin >> x_input >> y_input;
+
+        x_ok = parse(x_input, x_value);
+        y_ok = parse(y_input, y_value);
+    }
+
     free(buffer);
     freeaddrinfo(server); //Special free for addrinfo structs
     cbor_decref(&chroot); //Special free for CBor items
 
     return 0;
+}
+
+bool parse(const std::string& input, int& output) {
+    try {
+        output = std::stoi(input);
+        return (output > 0);
+    } catch (std::invalid_argument) {
+        return false;
+    }
 }

@@ -10,8 +10,14 @@
 
 int main(int argc, char *argv[]) {
 
-    if (argc < 2) std::cerr << "ERROR : No address provided !" << std::endl;
-    if (argc < 3) std::cerr << "ERROR : No port provided !" << std::endl;
+    if (argc < 2) {
+        std::cerr << "ERROR : No address provided !" << std::endl;
+        return 1;
+    }
+    if (argc < 3) {
+        std::cerr << "ERROR : No port provided !" << std::endl;
+        return 1;
+    }
 
     int socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -29,7 +35,10 @@ int main(int argc, char *argv[]) {
     struct addrinfo *server;
 
     int found = getaddrinfo(argv[1], argv[2], &hints  , &server);
-    if (found < 0) std::cerr << "ERROR : Host not found" << std::endl;
+    if (found < 0) {
+        std::cerr << "ERROR : Host not found" << std::endl;
+        return 1;
+    }
 
     unsigned char *buffer;
 

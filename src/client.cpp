@@ -58,7 +58,8 @@ int main(int argc, char *argv[]) {
     sendto(socket_fd, buffer, length, 0, server->ai_addr, server->ai_addrlen);
 
     free(buffer);
-    cbor_decref(&chroot); //Free for CBor items
+    freeaddrinfo(server); //Special free for addrinfo structs
+    cbor_decref(&chroot); //Special free for CBor items
 
     return 0;
 }

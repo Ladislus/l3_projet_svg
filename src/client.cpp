@@ -36,23 +36,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    unsigned char *buffer;
-
-    cbor_item_t *chroot = cbor_new_definite_map(2);
-    cbor_map_add(chroot, (struct cbor_pair) {
-        .key = cbor_move(cbor_build_string("sun_x")),
-        .value = cbor_move(cbor_build_uint8(10))
-    });
-    cbor_map_add(chroot, (struct cbor_pair) {
-            .key = cbor_move(cbor_build_string("sun_y")),
-            .value = cbor_move(cbor_build_uint8(5))
-    });
-
-    size_t buffer_size;
-    size_t length = cbor_serialize_alloc(chroot, &buffer, &buffer_size);
-
-    sendto(socket_fd, buffer, length, 0, server->ai_addr, server->ai_addrlen);
-
     std::string x_input(""), y_input("");
     int x_value = -1, y_value = -1;
     bool x_ok = false, y_ok = false;
@@ -66,6 +49,23 @@ int main(int argc, char *argv[]) {
         x_ok = parse(x_input, x_value);
         y_ok = parse(y_input, y_value);
     }
+
+    unsigned char *buffer;
+
+    cbor_item_t *chroot = cbor_new_definite_map(2);
+    cbor_map_add(chroot, (struct cbor_pair) {
+        .key = cbor_move(cbor_build_string("sun_x")),
+        .value = cbor_move(cbor_build_uint8(x_value))
+    });
+    cbor_map_add(chroot, (struct cbor_pair) {
+            .key = cbor_move(cbor_build_string("sun_y")),
+            .value = cbor_move(cbor_build_uint8(y_value))
+    });
+
+    size_t buffer_size;
+    size_t length = cbor_serialize_alloc(chroot, &buffer, &buffer_size);
+
+    sendto(socket_fd, buffer, length, 0, server->ai_addr, server->ai_addrlen);
 
     free(buffer);
     freeaddrinfo(server); //Special free for addrinfo structs

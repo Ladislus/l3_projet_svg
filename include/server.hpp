@@ -2,26 +2,30 @@
 // Created by o2174867 on 13/02/20.
 //
 
-#ifndef PROJET_SERVER_HPP
-#define PROJET_SERVER_HPP
+#ifndef DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP
+#define DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP
 
 #define SIZE 1024
 
 #include <sys/types.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <string.h>
 #include <netdb.h>
-#include <stdio.h>
 #include <iostream>
+#include <strings.h>
+#include <cbor/data.h>
+#include <cbor.h>
+#include <cstring>
 
-enum server_status { OK, FAILED, PORT, BINDING, RECV, ACK };
+enum server_status { OK, FAILED, PORT, BINDING, RECV };
 
 class Server {
 
     private:
+
+        //TODO : Add serverUI and run it
+
         server_status _status;
         unsigned short int _port;
         int _sock;
@@ -35,6 +39,7 @@ class Server {
     public:
         explicit Server(unsigned short int port);
         void start();
+        void stop();
 };
 
-#endif //PROJET_SOCKET_HPP
+#endif //DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP

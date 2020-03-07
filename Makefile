@@ -4,20 +4,28 @@ CC := g++
 # Options de compilation
 WFLAGS := -Wall -Wextra -pedantic
 SFLAGS := -std=c++17
-IFLAGS := -I include -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/librsvg-2.0 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng16 -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/freetype2 -I/usr/include/libpng16
-TFLAGS := -pthread
-LFLAGS := -lgtk-3 -lgdk-3 -lpangocairo-1.0 -lpango-1.0 -latk-1.0 -lcairo-gobject -lrsvg-2 -lm -lgio-2.0 -lgdk_pixbuf-2.0 -lgobject-2.0 -lglib-2.0 -lcairo -ltinyxml2
+IFLAGS := -I include $(shell pkg-config --cflags cairo gtk+-3.0 librsvg-2.0 tinyxml2)
+LFLAGS := $(shell pkg-config --libs cairo gtk+-3.0 librsvg-2.0 tinyxml2) -lcbor
 
 #Compilateur final
-COMPILEUR := $(CC) $(SFLAGS) $(TFLAGS) $(IFLAGS)
+COMPILEUR_SERVER := $(CC) $(SFLAGS) $(IFLAGS)
+COMPILEUR_CLIENT := $(CC) $(SFLAGS) -I include
 
 #Noms des fichiers
-FILES = $(notdir $(basename $(wildcard src/*.cpp)))
-SRC = $(addprefix src/, $(FILES:=.cpp))
-OBJ = $(addprefix obj/, $(FILES:=.o))
+FILES_SERVER = main server serverUI XMLController
+SRC_SERVER = $(addprefix src/, $(FILES_SERVER:=.cpp))
+OBJ_SERVER = $(addprefix obj/, $(FILES_SERVER:=.o))
+NAME_SERVER = server
+EXEC_SERVER := $(addprefix bin/, $(NAME_SERVER))
 
-EXECUTABLENAME := exec
-EXECUTABLE := $(addprefix bin/, $(EXECUTABLENAME))
+FILES_CLIENT = client
+SRC_CLIENT = $(addprefix src/, $(FILES_CLIENT:=.cpp))
+OBJ_CLIENT = $(addprefix obj/, $(FILES_CLIENT:=.o))
+NAME_CLIENT = client
+EXEC_CLIENT := $(addprefix bin/, $(NAME_CLIENT))
+
+SRC := $(SRC_SERVER) $(SRC_CLIENT)
+OBJ := $(OBJ_SERVER) $(OBJ_CLIENT)
 
 # règle de compilation
 default : prepare main
@@ -25,13 +33,18 @@ default : prepare main
 all : clean default run
 
 main : $(OBJ)
-	$(COMPILEUR) -o $(EXECUTABLE) $^ $(LFLAGS)
+	$(COMPILEUR_SERVER) -o $(EXEC_SERVER) $(OBJ_SERVER) $(LFLAGS)
+	@echo "Server created !"
+	$(COMPILEUR_CLIENT) -o $(EXEC_CLIENT) $(OBJ_CLIENT) -lcbor
+	@echo "Client created !"
 
-obj/%.o : $(SRC)
-	$(COMPILEUR)  -o $@ -c $<
+
+obj/%.o : src/%.cpp
+	$(COMPILEUR_SERVER) -o $@ -c $<
 
 run :
-	valgrind --leak-check=full ./$(EXECUTABLE)
+	valgrind --leak-check=full --track-origins=yes $(EXEC_CLIENT) 127.0.0.1 6000
+	valgrind --leak-check=full --track-origins=yes $(EXEC_SERVER) 6000
 
 prepare :
 	test -d obj || mkdir obj
@@ -41,6 +54,17 @@ clean :
 	rm -rf obj bin
 
 debug :
-	@echo $(FILES)
+	@echo $(FILES_SERVER)
+	@echo $(SRC_SERVER)
+	@echo $(OBJ_SERVER)
+	@echo $(NAME_SERVER)
+	@echo $(EXEC_SERVER)
+
+	@echo $(FILES_CLIENT)
+	@echo $(SRC_CLIENT)
+	@echo $(OBJ_CLIENT)
+	@echo $(NAME_CLIENT)
+	@echo $(EXEC_CLIENT)
+
 	@echo $(SRC)
 	@echo $(OBJ)

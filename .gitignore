@@ -1,10 +1,12 @@
 #Jetbrains
 .idea/
 
-Project
-Snippets
-cmake-build-debug
-exec
+#Project
+Snippets/
+cmake-build-debug/
+bin/
+obj/
+vgcore.*
 
 ### C++ template
 # Prerequisites

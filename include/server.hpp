@@ -14,12 +14,18 @@
 #include <netdb.h>
 #include <iostream>
 #include <strings.h>
+#include <cbor/data.h>
+#include <cbor.h>
+#include <cstring>
 
-enum server_status { OK, FAILED, PORT, BINDING, RECV, ACK };
+enum server_status { OK, FAILED, PORT, BINDING, RECV };
 
 class Server {
 
     private:
+
+        //TODO : Add serverUI and run it
+
         server_status _status;
         unsigned short int _port;
         int _sock;
@@ -33,6 +39,7 @@ class Server {
     public:
         explicit Server(unsigned short int port);
         void start();
+        void stop();
 };
 
 #endif //DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP

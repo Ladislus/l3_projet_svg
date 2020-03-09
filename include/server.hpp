@@ -17,6 +17,8 @@
 #include <cbor/data.h>
 #include <cbor.h>
 #include <cstring>
+#include <thread>
+#include "serverUI.hpp"
 
 enum server_status { OK, FAILED, PORT, BINDING, RECV };
 
@@ -24,8 +26,7 @@ class Server {
 
     private:
 
-        //TODO : Add serverUI and run it
-
+        ServerUI * _serverUI;
         server_status _status;
         unsigned short int _port;
         int _sock;

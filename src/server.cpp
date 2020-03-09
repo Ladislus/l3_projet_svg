@@ -1,6 +1,9 @@
 //
 // Created by o2174867 on 13/02/20.
 //
+
+#include <atomic>
+#include <functional>
 #include "server.hpp"
 
 Server::Server(unsigned short int port) {
@@ -31,6 +34,12 @@ Server::Server(unsigned short int port) {
     }
     this->_fromlen = sizeof(struct sockaddr_in);
     this->_status = OK;
+
+    //Server UI initialization
+    this->_serverUI = new ServerUI();
+
+
+    this->_serverUI->start();
 }
 
 void Server::error() {
@@ -119,7 +128,7 @@ void Server::start() {
 
                         cbor_decref(&item); //Cbor free of intermediate object
 
-                        //TODO : Update the XML
+                        this->_serverUI->update(sun_x, sun_y);  //Ask for SVG Update
                     }
                 }
             }

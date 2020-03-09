@@ -1,7 +1,6 @@
 //
 // Created by o2173194 on 05/03/20.
 //
-
 #include "serverUI.hpp"
 
 RsvgHandle *rsvg_handle;
@@ -11,35 +10,6 @@ static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data
     rsvg_handle_render_cairo(rsvg_handle, cr);
     return FALSE;
 }
-
-//static void do_drawing(cairo_t * cr){
-//    /*
-//     * TODO: This function should call a function (called like OnClickEventRefresh() ?) in another class for clean code.
-//     * */
-//    XMLElement *levelElement = svg_data.FirstChildElement("svg")->LastChildElement("g");
-//    for (XMLElement* child = levelElement->FirstChildElement("circle"); child != nullptr; child = child->NextSiblingElement())
-//    {
-//        if(swap){
-//            child->SetAttribute("style", "fill:#FFFFFF");
-//            swap = !swap;
-//        } else {
-//            child->SetAttribute("style", "fill:#000000");
-//            swap = !swap;
-//        }
-//
-//    }
-//    svg_data.SaveFile("../Resources/Image Samples/atom.svg");
-//    XMLPrinter printer;
-//    svg_data.Print(&printer);
-//    svg_handle = rsvg_handle_new_from_data ((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
-//    do_drawing_svg(cr);
-
-        /*
-         * ALL COMMANDS ABOVE SHOULD BE IN XMLCONTROLLER
-         * */
-
-//    gtk_widget_queue_draw(window);
-//}
 
 ServerUI::ServerUI() {
     /*Init*/
@@ -68,14 +38,15 @@ ServerUI::ServerUI() {
 
     /* IMPORTANT : Add all the widgets to the window */
     gtk_container_add(GTK_CONTAINER(this->_window), this->_darea);
-
-}
-
-void ServerUI::start() {
     gtk_widget_show_all(this->_window);
-    gtk_main();
 }
 
-void ServerUI::setXMLController(XMLController * controller) {
-    this->_controller = controller;
+void ServerUI::update(int sun_x, int sun_y){
+    this->_controller->update(sun_x, sun_y); //The controller will update the stored svg data and the svg handle.
+    gtk_widget_queue_draw(this->_window);   //Update the window to show new modifications.
+}
+
+//TODO : Make this threaded
+void ServerUI::start() {
+    gtk_main();
 }

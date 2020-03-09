@@ -17,14 +17,13 @@ private:
 public:
     ServerUI();
     void start();
+    void update(int sun_x, int sun_y);
     GtkWidget* getWindow() {
         return this->_window;
     }
     GtkWidget* getDarea() {
         return this->_darea;
     }
-    void setXMLController(XMLController * controller);
-
 };
 
 #endif //SERVERUI_HPP

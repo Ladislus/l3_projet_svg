@@ -1,9 +1,9 @@
-#include "serverUI.hpp"
+#include "server.hpp"
 
 int main(int argc, char *argv[])
 {
-    ServerUI* serverUI = new ServerUI();
-    serverUI->start();
+    Server* server = new Server(5555);
+    server->start();
 
     return 0;
 }

@@ -17,6 +17,8 @@ private:
 public:
     XMLController();
 
+    void update(int i, int i1);
+
     RsvgHandle *getSvg_handle() {
         return this->_svg_handle;
     }

@@ -5,7 +5,7 @@ CC := g++
 WFLAGS := -Wall -Wextra -pedantic
 SFLAGS := -std=c++17
 IFLAGS := -I include $(shell pkg-config --cflags cairo gtk+-3.0 librsvg-2.0 tinyxml2)
-LFLAGS := $(shell pkg-config --libs cairo gtk+-3.0 librsvg-2.0 tinyxml2) -lcbor
+LFLAGS := $(shell pkg-config --libs cairo gtk+-3.0 librsvg-2.0 tinyxml2) -lcbor -pthread
 
 #Compilateur final
 COMPILEUR_SERVER := $(CC) $(SFLAGS) $(IFLAGS)

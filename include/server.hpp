@@ -18,7 +18,8 @@
 #include <cbor.h>
 #include <cstring>
 #include <thread>
-#include "serverUI.hpp"
+
+#include "XMLController.hpp"
 
 enum server_status { OK, FAILED, PORT, BINDING, RECV };
 
@@ -26,7 +27,7 @@ class Server {
 
     private:
 
-        ServerUI * _serverUI;
+        XMLController* _controller;
         server_status _status;
         unsigned short int _port;
         int _sock;

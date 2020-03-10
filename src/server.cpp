@@ -2,8 +2,6 @@
 // Created by o2174867 on 13/02/20.
 //
 
-#include <atomic>
-#include <functional>
 #include "server.hpp"
 
 Server::Server(unsigned short int port) {
@@ -35,11 +33,10 @@ Server::Server(unsigned short int port) {
     this->_fromlen = sizeof(struct sockaddr_in);
     this->_status = OK;
 
+    this->_controller = new XMLController();
+
     //Server UI initialization
-    this->_serverUI = new ServerUI();
-
-
-    this->_serverUI->start();
+//    this->_serverUI = new ServerUI();
 }
 
 void Server::error() {
@@ -83,7 +80,10 @@ void Server::start() {
         //TODO : Find a way to stop the server infinite loop
         std::clog << "Start listening !" << std::endl << std::endl;
         while(true) {
+            std::clog << "Entering while !" << std::endl;
+
             msg_size = recvfrom(this->_sock, this->_buffer, 1024, 0, (struct sockaddr *)&this->_from, &this->_fromlen);
+            std::clog << "Received data !" << std::endl;
             if (msg_size < 0) {
                 this->_status = RECV;
                 error();
@@ -128,7 +128,7 @@ void Server::start() {
 
                         cbor_decref(&item); //Cbor free of intermediate object
 
-                        this->_serverUI->update(sun_x, sun_y);  //Ask for SVG Update
+                        //TODO : Update value
                     }
                 }
             }

@@ -34,9 +34,6 @@ Server::Server(unsigned short int port) {
     this->_status = OK;
 
     this->_controller = new XMLController();
-
-    //Server UI initialization
-//    this->_serverUI = new ServerUI();
 }
 
 void Server::error() {
@@ -80,8 +77,6 @@ void Server::start() {
         //TODO : Find a way to stop the server infinite loop
         std::clog << "Start listening !" << std::endl << std::endl;
         while(true) {
-            std::clog << "Entering while !" << std::endl;
-
             msg_size = recvfrom(this->_sock, this->_buffer, 1024, 0, (struct sockaddr *)&this->_from, &this->_fromlen);
             std::clog << "Received data !" << std::endl;
             if (msg_size < 0) {

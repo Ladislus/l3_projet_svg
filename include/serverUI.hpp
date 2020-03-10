@@ -16,6 +16,7 @@ class ServerUI {
 
     private:
         GtkWidget* _window;
+        //TODO : stop thread in destructor
         std::thread _gtk_thread;
 
     public:

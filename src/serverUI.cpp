@@ -6,20 +6,17 @@
 
 RsvgHandle *rsvg_handle;
 
-static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data)
-{
-    std::cout << "In on_draw_envent : " << rsvg_handle << std::endl;
+static gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
     rsvg_handle_render_cairo(rsvg_handle, cr);
     return FALSE;
 }
 
 ServerUI::ServerUI(RsvgHandle* handler) {
-    std::cout << "In ServerUI Constructor : " << handler << std::endl;
     this->_gtk_thread = std::thread(build_serverUI, &(this->_window), handler);
     std::clog << "Started UI !" << std::endl;
 }
 
-void ServerUI::update(){
+void ServerUI::update() {
     gtk_widget_queue_draw(this->_window);   //Update the window to show new modifications.
 }
 
@@ -35,8 +32,6 @@ void build_serverUI(GtkWidget** window, RsvgHandle* handler) {
 
     /* We create a new XMLController with the svg image stored in the server data*/
     rsvg_handle = handler;
-
-    std::cout << "In build_serverUI : " << handler << std::endl;
 
     g_signal_connect(G_OBJECT(darea), "draw",
                      G_CALLBACK(on_draw_event), NULL);

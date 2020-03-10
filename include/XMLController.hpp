@@ -14,6 +14,7 @@ using namespace tinyxml2;
 class XMLController {
 
     private:
+        //TODO : Free in destructor
         RsvgHandle* _svg_handle;
         XMLDocument _svg_data;
         ServerUI* _serverUI;

@@ -8,23 +8,23 @@
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <string>
-#include "XMLController.hpp"
+#include <thread>
+#include <iostream>
+#include <librsvg/rsvg.h>
 
 class ServerUI {
-private:
-     GtkWidget *_window, *_darea;
-     XMLController *_controller;
-public:
-    ServerUI();
-    void start();
-    void update(int sun_x, int sun_y);
-    GtkWidget* getWindow() {
-        return this->_window;
-    }
-    GtkWidget* getDarea() {
-        return this->_darea;
-    }
+
+    private:
+        GtkWidget* _window;
+        //TODO : stop thread in destructor
+        std::thread _gtk_thread;
+
+    public:
+        explicit ServerUI(RsvgHandle*);
+        void update();
 };
+
+void build_serverUI(GtkWidget**, RsvgHandle*);
 
 #endif //SERVERUI_HPP
 

@@ -7,24 +7,22 @@
 
 #include <librsvg/rsvg.h>
 #include <tinyxml2.h>
+#include "serverUI.hpp"
 
 using namespace tinyxml2;
 
 class XMLController {
-private:
-    RsvgHandle *_svg_handle;
-    XMLDocument _svg_data;
-public:
-    XMLController();
 
-    void update(int i, int i1);
+    private:
+        //TODO : Free in destructor
+        RsvgHandle* _svg_handle;
+        XMLDocument _svg_data;
+        ServerUI* _serverUI;
 
-    RsvgHandle *getSvg_handle() {
-        return this->_svg_handle;
-    }
-    XMLDocument &getSvg_data() {
-        return this->_svg_data;
-    }
+    public:
+        XMLController();
+
+        void update(int i, int i1);
 };
 
 #endif //XMLCONTROLLER_HPP

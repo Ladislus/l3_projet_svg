@@ -99,13 +99,17 @@ void Server::start() {
                     std::clog << "Is definite ? : " << cbor_map_is_definite(item) << "; ";
                     std::clog << "Size : " << cbor_map_size(item) << std::endl;
 
-                    struct cbor_pair *map = cbor_map_handle(item);
-                    std::clog << "Key 1 : " << map[0].key->data << " = " << map[0].value->data << "; ";
-                    std::clog << "Key 2 : " << map[1].key->data << " = " << map[1].value->data << std::endl;
+                    cbor_describe(item, stdout);
+
+                    //FIXME : After adding a thread, cbor_map_handle corrupt the map
+                    struct cbor_pair *map_test = cbor_map_handle(item);
+                    cbor_describe(map_test[0].key, stdout);
+                    std::clog << "Key 1 : " << map_test[0].key->data << " = " << map_test[0].value->data << "; ";
+                    std::clog << "Key 2 : " << map_test[1].key->data << " = " << map_test[1].value->data << std::endl;
 
                     //TODO : Better way to get the keys in strings
-                    std::string key_1 = reinterpret_cast<const char *>(map[0].key->data),
-                                key_2 = reinterpret_cast<const char *>(map[1].key->data);
+                    std::string key_1 = reinterpret_cast<const char *>(map_test[0].key->data),
+                                key_2 = reinterpret_cast<const char *>(map_test[1].key->data);
 
                     if (key_1 != "sun_x" || key_2 != "sun_y") {
                         this->_status = RECV;
@@ -115,8 +119,8 @@ void Server::start() {
                         std::clog << "Valid data !" << std::endl;
 
                         //TODO : Better way to get the values in ints
-                        int sun_y = *(map[1].value->data);
-                        int sun_x = *(map[0].value->data);
+                        int sun_y = *(map_test[1].value->data);
+                        int sun_x = *(map_test[0].value->data);
                         std::clog << std::endl << "After extraction : " << std::endl;
                         std::clog << '[' << key_1 << "] " << sun_x << std::endl;
                         std::clog << '[' << key_2 << "] " << sun_y << std::endl;

@@ -30,7 +30,7 @@ OBJ := $(OBJ_SERVER) $(OBJ_CLIENT)
 # règle de compilation
 default : prepare main
 
-all : clean default run
+all : clean default run_valgrind
 
 main : $(OBJ)
 	$(COMPILEUR_SERVER) -o $(EXEC_SERVER) $(OBJ_SERVER) $(LFLAGS)
@@ -42,9 +42,15 @@ main : $(OBJ)
 obj/%.o : src/%.cpp
 	$(COMPILEUR_SERVER) -o $@ -c $<
 
-run :
-	valgrind --leak-check=full --track-origins=yes $(EXEC_CLIENT) 127.0.0.1 6000
-	valgrind --leak-check=full --track-origins=yes $(EXEC_SERVER) 6000
+run_server :
+	$(EXEC_SERVER) 5555
+
+run_client :
+	$(EXEC_CLIENT) 127.0.0.1 5555
+
+run_valgrind :
+	valgrind --leak-check=full --track-origins=yes $(EXEC_SERVER) 5555
+	valgrind --leak-check=full --track-origins=yes $(EXEC_CLIENT) 127.0.0.1 5555
 
 prepare :
 	test -d obj || mkdir obj

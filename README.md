@@ -19,8 +19,17 @@ Finally :
 ```
 make
 ```
-This will compile the program and execute it.
+This will compile the program.
 
+To launch :
+```
+make run_server
+```
+```
+make run_client
+```
+
+You can also use Cmake if you want, using the regular procedure.
 
 
 ### Prerequisites
@@ -32,6 +41,7 @@ Here's a list of libraries and dependencies we used :
 * libgtk-3-dev
 * librsvg2-dev
 * libtinyxml2-dev
+* libcbor
 
 #### On Ubuntu
 
@@ -48,10 +58,12 @@ You can find all the packages on the AUR repository, but most of them are alread
 
 ## Running the tests
 
+//TODO
 Explain how to run the automated tests for this system
 
 ## Built With
 
+* [Make](https://www.gnu.org/software/make/manual/make.html) - Build tool
 * [CMake](https://cmake.org/) - Build tool
 
 ## Versioning
@@ -60,12 +72,13 @@ We use [Git](https://git-scm.com/) for versioning. For the versions available, s
 
 ## Authors
 
-* **Ladislas WALCAK** - *Initial work* - [Github](https://github.com/)
+* **Ladislas WALCAK** - *Initial work* - [Github](https://github.com/Ladislus)
 * **Simon DRIEUX** - *Initial work* - [Github](https://github.com/SimonDr18)
 * **Baptiste JOFFRY** - *Initial work* - [Github](https://github.com/)
 * **Luka MERCIER** - *Initial work* - [Github](https://github.com/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+//TODO
+See also the list of [contributors]() who participated in this project.
 
 ## License
 

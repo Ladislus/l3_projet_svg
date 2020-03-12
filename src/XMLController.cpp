@@ -7,7 +7,6 @@
 XMLController::XMLController() {
 
     /* Load the svg filename */
-    //TODO : relative path
     this->_svg_data.LoadFile("Resources/Image Samples/atom.svg");
 
     XMLPrinter printer;
@@ -22,14 +21,16 @@ XMLController::XMLController() {
 
 void XMLController::update(int sun_x, int sun_y) {
     XMLElement *levelElement = this->_svg_data.FirstChildElement("svg")->LastChildElement("g");
+    XMLElement *childElement = levelElement->NextSiblingElement("g")->FirstChildElement("g");
 
-    //TODO : Don't save the file
-//    this->_svg_data.SaveFile("../Resources/Image Samples/atom.svg");
+    childElement->SetAttribute("cx", sun_x);
+    childElement->SetAttribute("cy", sun_y);
 
     GError* errors;
     XMLPrinter printer;
     this->_svg_data.Print(&printer);
     this->_svg_handle = rsvg_handle_new_from_data((const unsigned char*) printer.CStr(), printer.CStrSize()-1, &errors);
+    this->_serverUI->update();
     //TODO : Manage error
 //    if (errors != nullptr) std::cerr << errors->message << std::endl;
 }

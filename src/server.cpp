@@ -125,6 +125,7 @@ void Server::start() {
                         cbor_decref(&item); //Cbor free of intermediate object
 
                         //TODO : Update value
+                        this->_controller->update(sun_x, sun_y);
                     }
                 }
             }

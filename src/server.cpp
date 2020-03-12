@@ -118,13 +118,14 @@ void Server::start() {
                         //TODO : Better way to get the values in ints
                         int sun_y = (uint8_t) *pairs[0].value->data;
                         int sun_x = (uint8_t) *pairs[1].value->data;
+
                         std::clog << std::endl << "After extraction : " << std::endl;
                         std::clog << '[' << key_1 << "] " << sun_x << std::endl;
                         std::clog << '[' << key_2 << "] " << sun_y << std::endl;
 
-                        cbor_decref(&item); //Cbor free of intermediate object
+                        this->_controller->update(sun_x, sun_y);
 
-                        //TODO : Update value
+                        cbor_decref(&item); //Cbor free of intermediate object
                     }
                 }
             }

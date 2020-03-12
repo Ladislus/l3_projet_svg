@@ -16,15 +16,16 @@ class ServerUI {
 
     private:
         GtkWidget* _window;
-        //TODO : stop thread in destructor
+        GtkWidget *_darea;
+    //TODO : stop thread in destructor
         std::thread _gtk_thread;
 
     public:
         explicit ServerUI(RsvgHandle*);
-        void update();
+        void update(RsvgHandle*);
 };
 
-void build_serverUI(GtkWidget**, RsvgHandle*);
+void build_serverUI(GtkWidget**, RsvgHandle*, GtkWidget**);
 
 #endif //SERVERUI_HPP
 

@@ -42,10 +42,10 @@ main : $(OBJ)
 obj/%.o : src/%.cpp
 	$(COMPILEUR_SERVER) -o $@ -c $<
 
-run_server :
+run_server : main
 	$(EXEC_SERVER) 5555
 
-run_client :
+run_client : main
 	$(EXEC_CLIENT) 127.0.0.1 5555
 
 run_valgrind :

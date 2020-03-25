@@ -115,9 +115,9 @@ void Server::start() {
                     } else {
                         std::clog << "Valid data !" << std::endl;
 
-                        //TODO : Better way to get the values in ints
-                        int sun_y = (uint8_t) *pairs[0].value->data;
-                        int sun_x = (uint8_t) *pairs[1].value->data;
+                        int sun_x = cbor_get_uint16(pairs[1].value);
+                        int sun_y = cbor_get_uint16(pairs[0].value);
+
 
                         std::clog << std::endl << "After extraction : " << std::endl;
                         std::clog << '[' << key_1 << "] " << sun_x << std::endl;

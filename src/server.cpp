@@ -75,7 +75,7 @@ void Server::start() {
         ssize_t msg_size;
 
         //TODO : Find a way to stop the server infinite loop
-        std::clog << "Start listening !" << std::endl << std::endl;
+        std::clog << "Start listening on port " << this->_port << " !" << std::endl << std::endl;
         while(true) {
             msg_size = recvfrom(this->_sock, this->_buffer, 1024, 0, (struct sockaddr *)&this->_from, &this->_fromlen);
             std::clog << "Received data !" << std::endl;

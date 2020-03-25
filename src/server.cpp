@@ -86,7 +86,7 @@ void Server::start() {
             } else {
 
                 //TODO : Better loading of the buffer
-                struct cbor_load_result result;
+                struct cbor_load_result result{};
                 std::clog << std::string(this->_buffer, msg_size) << std::endl;
                 cbor_item_t * item = cbor_load(reinterpret_cast<cbor_data>(this->_buffer), msg_size, &result);
 
@@ -101,10 +101,8 @@ void Server::start() {
                     std::clog << "Size : " << cbor_map_size(item) << std::endl;
                     cbor_describe(item, stdout);
 
-                    //FIXME : After adding a thread, cbor_map_handle corrupt the map
                     struct cbor_pair *pairs = cbor_map_handle(item);
 
-                    //TODO : Better way to get the keys in strings
                     std::string key_1 = std::string((const char *)pairs[0].key->data, cbor_string_length(pairs[0].key)),
                                 key_2 = std::string((const char *)pairs[1].key->data, cbor_string_length(pairs[1].key));
 

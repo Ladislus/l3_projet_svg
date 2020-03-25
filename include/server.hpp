@@ -31,10 +31,10 @@ class Server {
         server_status _status;
         unsigned short int _port;
         int _sock;
-        struct sockaddr_in _server;
-        struct sockaddr_in _from;
+        struct sockaddr_in _server{};
+        struct sockaddr_in _from{};
         socklen_t _fromlen;
-        char _buffer[SIZE];
+        char _buffer[SIZE]{};
 
         void error();
 

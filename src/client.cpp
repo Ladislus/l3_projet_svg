@@ -78,7 +78,7 @@ bool parse(const std::string& input, int& output) {
     try {
         output = std::stoi(input);
         return (output > 0);
-    } catch (std::invalid_argument) {
+    } catch (std::invalid_argument&) {
         return false;
     }
 }

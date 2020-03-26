@@ -4,11 +4,11 @@ int main(int argc, char *argv[]) {
 
     unsigned short int port = 6789;
     if (argc >= 2) {
-        char *error;
-        port = strtol(argv[1], &error, strlen(argv[1]));
-        if (*error) {
-            std::cout << "Bad port provided, using default port 6789" << std::endl;
+        port = strtoul(argv[1], nullptr, 10);
+        //If port == 0, an error occured
+        if (!port) {
             port = 6789;
+            std::cerr << "Bad port provided, using default port 6789" << std::endl;
         }
     } else {
         std::cout << "No port provided, using default port 6789" << std::endl;

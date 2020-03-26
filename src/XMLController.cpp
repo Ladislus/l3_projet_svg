@@ -10,12 +10,14 @@ XMLController::XMLController() {
     this->_svg_data.LoadFile("Resources/Image Samples/maison.svg");
 
     XMLPrinter printer;
-    //GError* errors;
     this->_svg_data.Print(&printer);
     RsvgHandle * _svg_handle = rsvg_handle_new_from_data((const unsigned char*) printer.CStr(), printer.CStrSize() - 1, NULL);
-    //TODO : Manage error
-//    if (errors != nullptr) std::cerr << errors->message << std::endl;
     this->_serverUI = new ServerUI(_svg_handle);
+}
+
+XMLController::~XMLController() {
+//    delete this->_serverUI;
+    std::clog << "XMLController destructor done !" << std::endl;
 }
 
 void XMLController::update(int sun_x, int sun_y) {
@@ -28,8 +30,6 @@ void XMLController::update(int sun_x, int sun_y) {
 
     XMLPrinter printer;
     this->_svg_data.Print(&printer);
-    RsvgHandle * _svg_handle = rsvg_handle_new_from_data((const unsigned char*) printer.CStr(), printer.CStrSize()-1, NULL);
+    RsvgHandle * _svg_handle = rsvg_handle_new_from_data((const unsigned char*) printer.CStr(), printer.CStrSize() - 1, NULL);
     this->_serverUI->update(_svg_handle);
-    //TODO : Manage error
-//    if (errors != nullptr) std::cerr << errors->message << std::endl;
 }

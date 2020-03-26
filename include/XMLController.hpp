@@ -20,8 +20,9 @@ class XMLController {
 
     public:
         XMLController();
+        ~XMLController();
 
-        void update(int i, int i1);
+        void update(int sun_x, int sun_y);
 };
 
 #endif //XMLCONTROLLER_HPP

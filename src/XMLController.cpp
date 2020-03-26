@@ -16,7 +16,7 @@ XMLController::XMLController() {
 }
 
 XMLController::~XMLController() {
-//    delete this->_serverUI;
+    delete this->_serverUI;
     std::clog << "XMLController destructor done !" << std::endl;
 }
 

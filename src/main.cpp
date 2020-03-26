@@ -2,15 +2,15 @@
 
 int main(int argc, char *argv[]) {
 
-    Server* server;
-    if (argc < 2) {
+    unsigned short int port = 6789;
+    if (argc >= 2) {
+        port = atoi(argv[1]);
+    } else {
         std::cout << "No port provided, using default port 6789" << std::endl;
-        server = new Server(6789);
     }
-    else {
-        server = new Server(atoi(argv[1]));
-    }
-    server->start();
+
+    Server server(port);
+    server.start();
 
     return 0;
 }

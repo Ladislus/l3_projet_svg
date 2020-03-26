@@ -27,7 +27,8 @@ class Server {
 
     private:
 
-        XMLController* _controller;
+        //Use of a pointer for the controller to prevent it from calling the default constructor now
+        XMLController *_controller;
         server_status _status;
         unsigned short int _port;
         int _sock;
@@ -40,8 +41,9 @@ class Server {
 
     public:
         explicit Server(unsigned short int port);
+        ~Server();
+
         void start();
-        void stop();
 };
 
 #endif //DRIEUX_JOFFROY_WALCAK_MERCIER_SERVER_HPP

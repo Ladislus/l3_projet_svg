@@ -36,6 +36,11 @@ Server::Server(unsigned short int port) {
     this->_controller = new XMLController();
 }
 
+Server::~Server() {
+    delete this->_controller;
+    std::clog << "Server destructor done !" << std::endl;
+}
+
 void Server::error() {
 
     std::cerr << "ERROR : ";
@@ -129,8 +134,4 @@ void Server::start() {
             }
         }
     }
-}
-
-void Server::stop() {
-    //TODO : Free
 }

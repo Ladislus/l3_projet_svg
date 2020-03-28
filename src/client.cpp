@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_DGRAM;
     hints.ai_protocol = 0;
-    hints.ai_canonname = NULL;
-    hints.ai_addr = NULL;
-    hints.ai_next = NULL;
+    hints.ai_canonname = nullptr;
+    hints.ai_addr = nullptr;
+    hints.ai_next = nullptr;
 
     struct addrinfo *server;
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     while (!x_ok || !y_ok) {
         x_ok = false; y_ok = false;
 
-        std::cout << "Enter 'x y' (x>=0, y>=0) : ";
+        std::cout << "Enter 'x y' (65535 >= x >= 0, 65535 >= y >= 0) : ";
         std::cin >> x_input >> y_input;
 
         x_ok = parse(x_input, x_value);
@@ -55,11 +55,11 @@ int main(int argc, char *argv[]) {
     cbor_item_t *chroot = cbor_new_definite_map(2);
     cbor_map_add(chroot, (struct cbor_pair) {
         .key = cbor_move(cbor_build_string("sun_x")),
-        .value = cbor_move(cbor_build_uint8(x_value))
+        .value = cbor_move(cbor_build_uint16(x_value))
     });
     cbor_map_add(chroot, (struct cbor_pair) {
             .key = cbor_move(cbor_build_string("sun_y")),
-            .value = cbor_move(cbor_build_uint8(y_value))
+            .value = cbor_move(cbor_build_uint16(y_value))
     });
 
     size_t buffer_size;
@@ -78,7 +78,7 @@ bool parse(const std::string& input, int& output) {
     try {
         output = std::stoi(input);
         return (output > 0);
-    } catch (std::invalid_argument) {
+    } catch (std::invalid_argument&) {
         return false;
     }
 }

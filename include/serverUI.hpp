@@ -15,14 +15,17 @@
 class ServerUI {
 
     private:
-        GtkWidget* _window;
-        GtkWidget *_darea;
+        GtkWidget *_window{};
+        GtkWidget *_darea{};
     //TODO : stop thread in destructor
         std::thread _gtk_thread;
 
     public:
         explicit ServerUI(RsvgHandle*);
+        ~ServerUI();
+
         void update(RsvgHandle*);
+
 };
 
 void build_serverUI(GtkWidget**, RsvgHandle*, GtkWidget**);

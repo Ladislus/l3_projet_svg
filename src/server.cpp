@@ -36,6 +36,11 @@ Server::Server(unsigned short int port) {
     this->_controller = new XMLController();
 }
 
+Server::~Server() {
+    delete this->_controller;
+    std::clog << "Server destructor done !" << std::endl;
+}
+
 void Server::error() {
 
     std::cerr << "ERROR : ";
@@ -75,7 +80,7 @@ void Server::start() {
         ssize_t msg_size;
 
         //TODO : Find a way to stop the server infinite loop
-        std::clog << "Start listening !" << std::endl << std::endl;
+        std::clog << "Start listening on port " << this->_port << " !" << std::endl << std::endl;
         while(true) {
             msg_size = recvfrom(this->_sock, this->_buffer, 1024, 0, (struct sockaddr *)&this->_from, &this->_fromlen);
             std::clog << "Received data !" << std::endl;
@@ -86,7 +91,7 @@ void Server::start() {
             } else {
 
                 //TODO : Better loading of the buffer
-                struct cbor_load_result result;
+                struct cbor_load_result result{};
                 std::clog << std::string(this->_buffer, msg_size) << std::endl;
                 cbor_item_t * item = cbor_load(reinterpret_cast<cbor_data>(this->_buffer), msg_size, &result);
 
@@ -101,10 +106,8 @@ void Server::start() {
                     std::clog << "Size : " << cbor_map_size(item) << std::endl;
                     cbor_describe(item, stdout);
 
-                    //FIXME : After adding a thread, cbor_map_handle corrupt the map
                     struct cbor_pair *pairs = cbor_map_handle(item);
 
-                    //TODO : Better way to get the keys in strings
                     std::string key_1 = std::string((const char *)pairs[0].key->data, cbor_string_length(pairs[0].key)),
                                 key_2 = std::string((const char *)pairs[1].key->data, cbor_string_length(pairs[1].key));
 
@@ -115,9 +118,9 @@ void Server::start() {
                     } else {
                         std::clog << "Valid data !" << std::endl;
 
-                        //TODO : Better way to get the values in ints
-                        int sun_y = (uint8_t) *pairs[0].value->data;
-                        int sun_x = (uint8_t) *pairs[1].value->data;
+                        int sun_x = cbor_get_uint16(pairs[1].value);
+                        int sun_y = cbor_get_uint16(pairs[0].value);
+
 
                         std::clog << std::endl << "After extraction : " << std::endl;
                         std::clog << '[' << key_1 << "] " << sun_x << std::endl;
@@ -131,8 +134,4 @@ void Server::start() {
             }
         }
     }
-}
-
-void Server::stop() {
-    //TODO : Free
 }

@@ -16,6 +16,14 @@ ServerUI::ServerUI(RsvgHandle* handler) {
     std::clog << "Started UI !" << std::endl;
 }
 
+//TODO : Free the rest of the data
+ServerUI::~ServerUI() {
+    //The gtk window must be closed manually to execute the join
+    this->_gtk_thread.join();
+    std::clog << "ServerUI thread stopped !" << std::endl;
+    std::clog << "ServerUI destructor done !" << std::endl;
+}
+
 void ServerUI::update(RsvgHandle* handler) {
     rsvg_handle = handler;
     gtk_widget_queue_draw(this->_darea);   //Update the window to show new modifications.

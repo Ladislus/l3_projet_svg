@@ -35,6 +35,13 @@ make run_server
 make run_client
 ```
 
+Then, on the client, simply enter values like :  
+```
+x_value y_value
+```
+Two values separated by one space.
+It should be noted that the image's dimensions are 500x500, so any value bigger than that would make the sun disappeargit stat.
+
 You can also use Cmake if you want, using the regular procedure.
 
 

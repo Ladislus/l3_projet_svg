@@ -7,25 +7,31 @@ Project made by a group of 4 students of Orleans' University : Ladislas WALCAK, 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 Firstly, you need to clone this project on your local computer.
 
-```
+```bash
 git clone https:// o<studentnumber> @pdicost.univ-orleans.fr/git/scm/lipi/drieux_joffroy_walcak_mercier.git
 ```
 Then navigate to the project folder :
-```
+```bash
 cd drieux_joffroy_walcak_mercier/
 ```
 
-Finally :
-```
+You can then compile manually the 2 programs with :
+```bash
 make
 ```
-This will compile the program.
-
-To launch :
+Then launch them with the commands :  
+```bash
+bin/client [address] [port]
 ```
+```bash
+bin/server [port]
+```
+
+but you can also compile and launch the programs with default port and addresses (127.0.0.1 on port 5555):
+```bash
 make run_server
 ```
-```
+```bash
 make run_client
 ```
 
@@ -55,12 +61,6 @@ apt-get install libcairo2-dev libgtk-3-dev librsvg2 libcairo2-dev
 
 You can find all the packages on the AUR repository, but most of them are already installed becauses most of software are using them as dependencies.
 
-
-## Running the tests
-
-//TODO
-Explain how to run the automated tests for this system
-
 ## Built With
 
 * [Make](https://www.gnu.org/software/make/manual/make.html) - Build tool
@@ -68,7 +68,7 @@ Explain how to run the automated tests for this system
 
 ## Versioning
 
-We use [Git](https://git-scm.com/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+We use [Git](https://git-scm.com/) for versioning.
 
 ## Authors
 
@@ -76,9 +76,6 @@ We use [Git](https://git-scm.com/) for versioning. For the versions available, s
 * **Simon DRIEUX** - *Initial work* - [Github](https://github.com/SimonDr18)
 * **Baptiste JOFFRY** - *Initial work* - [Github](https://github.com/)
 * **Luka MERCIER** - *Initial work* - [Github](https://github.com/)
-
-//TODO
-See also the list of [contributors]() who participated in this project.
 
 ## License
 
